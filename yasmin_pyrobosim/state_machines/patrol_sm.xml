@@ -1,13 +1,17 @@
 <StateMachine outcomes="succeeded aborted canceled" name="PATROL_SM">
     <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
-        <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
+        <Transition from="succeeded" to="GETTING_WORLD"/>
         <Transition from="aborted" to="aborted"/>
     </State>
-    <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
-        <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+    <State name="GETTING_WORLD" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
+        <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
         <Transition from="aborted" to="aborted"/>
+    </State>
+    <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
+        <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
     </State>
     <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
+        <Remap old="locations" new="ordered_locations"/>
         <Transition from="next" to="NAVIGATING"/>
         <Transition from="end" to="succeeded"/>
     </State>

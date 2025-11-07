@@ -26,3 +26,10 @@
         <description>GetNextLocation state for YASMIN demos</description>
     </class>
 </library>
+<library path="order_locations_state">
+    <class name="yasmin_pyrobosim/OrderLocationsState"
+         type="OrderLocationsState"
+         base_class_type="yasmin::State">
+        <description>OrderLocations state for YASMIN demos</description>
+    </class>
+</library>

@@ -23,7 +23,6 @@ find_package(yasmin_viewer REQUIRED)
 find_package(yasmin_factory REQUIRED)
 find_package(pyrobosim_msgs REQUIRED)
 
-
 # C++
 include_directories(src)
 include_directories(include)
@@ -48,18 +47,6 @@ set(DEPENDENCIES_PACKAGE
   yasmin_factory
   pyrobosim_msgs
 )
-
-install(DIRECTORY include/
-  DESTINATION include/${PROJECT_NAME}
-)
-
-# patrol_demo
-# add_executable(patrol_demo src/patrol_demo.cpp)
-# target_link_libraries(patrol_demo PUBLIC ${DEPENDENCIES})
-# install(TARGETS
-#   patrol_demo
-#   DESTINATION lib/${PROJECT_NAME}
-# )
 
 # plugins
 add_library(navigate_state SHARED src/navigate_state.cpp)
@@ -87,9 +74,11 @@ install(TARGETS get_next_location_state
   LIBRARY DESTINATION lib
 )
 
-
-# Python
-# ament_python_install_package(${PROJECT_NAME})
+add_library(order_locations_state SHARED src/order_locations_state.cpp)
+target_link_libraries(order_locations_state PUBLIC ${DEPENDENCIES})
+install(TARGETS order_locations_state
+  LIBRARY DESTINATION lib
+)
 
 # Install state_machines directory
 install(DIRECTORY state_machines
