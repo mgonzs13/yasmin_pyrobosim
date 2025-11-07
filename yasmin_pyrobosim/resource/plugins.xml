@@ -1,0 +1,28 @@
+<library path="navigate_state">
+    <class name="yasmin_pyrobosim/NavigateState"
+         type="NavigateState"
+         base_class_type="yasmin::State">
+        <description>Navigate state for YASMIN demos</description>
+    </class>
+</library>
+<library path="get_robot_params_state">
+    <class name="yasmin_pyrobosim/GetRobotParamsState"
+         type="GetRobotParamsState"
+         base_class_type="yasmin::State">
+        <description>GetRobotParams state for YASMIN demos</description>
+    </class>
+</library>
+<library path="get_world_state_state">
+    <class name="yasmin_pyrobosim/GetWorldStateState"
+         type="GetWorldStateState"
+         base_class_type="yasmin::State">
+        <description>GetWorldState state for YASMIN demos</description>
+    </class>
+</library>
+<library path="get_next_location_state">
+    <class name="yasmin_pyrobosim/GetNextLocationState"
+         type="GetNextLocationState"
+         base_class_type="yasmin::State">
+        <description>GetNextLocation state for YASMIN demos</description>
+    </class>
+</library>
