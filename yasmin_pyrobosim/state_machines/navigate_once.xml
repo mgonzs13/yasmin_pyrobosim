@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<StateMachine name="NAVIGATE_ONCE" outcomes="succeeded canceled aborted" start_state="GETTING_ROBOT_PARAMS">
+    <State class="yasmin_pyrobosim/GetRobotParamsState" name="GETTING_ROBOT_PARAMS" type="cpp">
+        <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
+        <Transition from="aborted" to="aborted"/>
+    </State>
+    <State class="yasmin_pyrobosim/GetWorldStateState" name="GETTING_WORLD_STATE" type="cpp">
+        <Transition from="aborted" to="aborted"/>
+        <Transition from="succeeded" to="PICKING_RANDOM_LOCATION"/>
+    </State>
+    <State class="yasmin_pyrobosim/PickRandomLocationState" name="PICKING_RANDOM_LOCATION" type="cpp">
+        <Transition from="succeeded" to="NAVIGATING"/>
+    </State>
+    <State class="yasmin_pyrobosim/NavigateState" name="NAVIGATING" type="cpp">
+        <Remap new="random_location" old="target_location"/>
+        <Transition from="succeeded" to="succeeded"/>
+        <Transition from="canceled" to="canceled"/>
+        <Transition from="aborted" to="aborted"/>
+    </State>
+</StateMachine>

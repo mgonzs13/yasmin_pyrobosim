@@ -12,6 +12,13 @@
         <description>GetRobotParams state for YASMIN demos</description>
     </class>
 </library>
+<library path="pick_random_location">
+    <class name="yasmin_pyrobosim/PickRandomLocationState"
+         type="PickRandomLocationState"
+         base_class_type="yasmin::State">
+        <description>PickRandomLocation state for YASMIN demos</description>
+    </class>
+</library>
 <library path="get_world_state_state">
     <class name="yasmin_pyrobosim/GetWorldStateState"
          type="GetWorldStateState"

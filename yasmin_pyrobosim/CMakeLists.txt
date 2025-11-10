@@ -68,6 +68,12 @@ install(TARGETS get_world_state_state
   LIBRARY DESTINATION lib
 )
 
+add_library(pick_random_location SHARED src/pick_random_location.cpp)
+target_link_libraries(pick_random_location PUBLIC ${DEPENDENCIES})
+install(TARGETS pick_random_location
+  LIBRARY DESTINATION lib
+)
+
 add_library(get_next_location_state SHARED src/get_next_location_state.cpp)
 target_link_libraries(get_next_location_state PUBLIC ${DEPENDENCIES})
 install(TARGETS get_next_location_state
