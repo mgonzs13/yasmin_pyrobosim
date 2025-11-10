@@ -1,25 +1,25 @@
-<?xml version="1.0" ?>
-<StateMachine name="PATROL_SM" outcomes="succeeded aborted canceled" start_state="GETTING_ROBOT_PARAMS">
-    <State class="yasmin_pyrobosim/GetRobotParamsState" name="GETTING_ROBOT_PARAMS" type="cpp">
-        <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
-        <Transition from="aborted" to="aborted"/>
-    </State>
-    <State class="yasmin_pyrobosim/GetWorldStateState" name="GETTING_WORLD_STATE" type="cpp">
-        <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
-        <Transition from="aborted" to="aborted"/>
-    </State>
-    <State class="yasmin_pyrobosim/OrderLocationsState" name="ORDERING_LOCATIONS" type="cpp">
-        <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
-    </State>
-    <State class="yasmin_pyrobosim/GetNextLocationState" name="GETTING_NEXT_LOCATION" type="cpp">
-        <Remap new="ordered_locations" old="locations"/>
-        <Transition from="next" to="NAVIGATING"/>
-        <Transition from="end" to="succeeded"/>
-    </State>
-    <State class="yasmin_pyrobosim/NavigateState" name="NAVIGATING" type="cpp">
-        <Remap new="next_location" old="target_location"/>
-        <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
-        <Transition from="aborted" to="aborted"/>
-        <Transition from="canceled" to="canceled"/>
-    </State>
+<?xml version='1.0' encoding='UTF-8'?>
+<StateMachine outcomes="succeeded aborted canceled" name="PATROL_SM" start_state="GETTING_ROBOT_PARAMS">
+  <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
+    <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
+    <Transition from="aborted" to="aborted"/>
+  </State>
+  <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
+    <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
+    <Transition from="aborted" to="aborted"/>
+  </State>
+  <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+  </State>
+  <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
+    <Remap old="locations" new="ordered_locations"/>
+    <Transition from="next" to="NAVIGATING"/>
+    <Transition from="end" to="succeeded"/>
+  </State>
+  <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
+    <Remap old="target_location" new="next_location"/>
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+    <Transition from="aborted" to="aborted"/>
+    <Transition from="canceled" to="canceled"/>
+  </State>
 </StateMachine>
