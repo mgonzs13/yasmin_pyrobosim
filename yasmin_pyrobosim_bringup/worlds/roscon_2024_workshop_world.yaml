@@ -22,16 +22,6 @@ robots:
       bidirectional: true
       max_connection_dist: 1.0
       max_time: 5.0
-    # sensors:
-    #   lidar:
-    #     type: lidar
-    #     update_rate_s: 0.1
-    #     angle_units: degrees
-    #     min_angle: -120.0
-    #     max_angle: 120.0
-    #     angular_resolution: 5.0
-    #     max_range_m: 2.0
-    # start_sensor_threads: true
 
 rooms:
   - name: dining
@@ -270,5 +260,8 @@ objects:
   - parent: desk
     category: waste
 
-  - parent: bin
+  - parent: table
+    category: waste
+
+  - parent: pantry
     category: waste
