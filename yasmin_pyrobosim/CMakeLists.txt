@@ -86,6 +86,12 @@ install(TARGETS order_locations_state
   LIBRARY DESTINATION lib
 )
 
+add_library(detect_objects_state SHARED src/detect_objects_state.cpp)
+target_link_libraries(detect_objects_state PUBLIC ${DEPENDENCIES})
+install(TARGETS detect_objects_state
+  LIBRARY DESTINATION lib
+)
+
 # Install state_machines directory
 install(DIRECTORY state_machines
   DESTINATION share/${PROJECT_NAME}/

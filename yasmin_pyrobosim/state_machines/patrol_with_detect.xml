@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<StateMachine name="PATROL_SM" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA">
+  <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+  </State>
+  <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
+    <Remap old="locations" new="ordered_locations"/>
+    <Transition from="next" to="NAVIGATING"/>
+    <Transition from="end" to="succeeded"/>
+  </State>
+  <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
+    <Remap old="target_location" new="next_location"/>
+    <Transition from="aborted" to="aborted"/>
+    <Transition from="canceled" to="canceled"/>
+    <Transition from="succeeded" to="DETECTING_OBJECTS"/>
+  </State>
+  <StateMachine name="GETTING_INITIAL_DATA" type="xml" file_name="get_initial_data.xml" package="yasmin_pyrobosim">
+    <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
+    <Transition from="aborted" to="aborted"/>
+  </StateMachine>
+  <State name="DETECTING_OBJECTS" type="cpp" class="yasmin_pyrobosim/DetectObjectsState">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+    <Transition from="canceled" to="canceled"/>
+    <Transition from="aborted" to="aborted"/>
+  </State>
+</StateMachine>
