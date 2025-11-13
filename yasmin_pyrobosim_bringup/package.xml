@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+    <name>yasmin_pyrobosim_bringup</name>
+    <version>0.0.0</version>
+    <description>Bringup for yasmin_pyrobosim</description>
+    <maintainer email="mgons@unileon.es">Miguel Ángel González Santamarta</maintainer>
+    <license>GPL-3</license>
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    <depend>yasmin_pyrobosim</depend>
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
