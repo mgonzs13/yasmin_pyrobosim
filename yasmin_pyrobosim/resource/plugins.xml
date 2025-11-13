@@ -33,3 +33,13 @@
         <description>DetectObjects state for YASMIN demos</description>
     </class>
 </library>
+<library path="pick_object_state">
+    <class name="yasmin_pyrobosim/PickObjectState" type="PickObjectState" base_class_type="yasmin::State">
+        <description>PickObject state for YASMIN demos</description>
+    </class>
+</library>
+<library path="place_object_state">
+    <class name="yasmin_pyrobosim/PlaceObjectState" type="PlaceObjectState" base_class_type="yasmin::State">
+        <description>PlaceObject state for YASMIN demos</description>
+    </class>
+</library>
