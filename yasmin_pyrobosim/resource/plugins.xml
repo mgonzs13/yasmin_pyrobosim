@@ -43,3 +43,8 @@
         <description>PlaceObject state for YASMIN demos</description>
     </class>
 </library>
+<library path="get_next_object_state">
+    <class name="yasmin_pyrobosim/GetNextObjectState" type="GetNextObjectState" base_class_type="yasmin::State">
+        <description>GetNextObject state for YASMIN demos</description>
+    </class>
+</library>

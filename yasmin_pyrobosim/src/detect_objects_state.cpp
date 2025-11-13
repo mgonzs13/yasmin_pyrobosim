@@ -36,7 +36,7 @@ public:
 
   std::string
   on_result(std::shared_ptr<yasmin::blackboard::Blackboard> blackboard,
-            const typename DetectObjectsAction::Result::SharedPtr result) {
+            const DetectObjectsAction::Result::SharedPtr result) {
 
     blackboard->set<std::vector<pyrobosim_msgs::msg::ObjectState>>(
         "detected_objects", result->detected_objects);

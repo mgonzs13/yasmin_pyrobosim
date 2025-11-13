@@ -104,6 +104,12 @@ install(TARGETS place_object_state
   LIBRARY DESTINATION lib
 )
 
+add_library(get_next_object_state SHARED src/get_next_object_state.cpp)
+target_link_libraries(get_next_object_state PUBLIC ${DEPENDENCIES})
+install(TARGETS get_next_object_state
+  LIBRARY DESTINATION lib
+)
+
 # Install state_machines directory
 install(DIRECTORY state_machines
   DESTINATION share/${PROJECT_NAME}/
