@@ -36,6 +36,7 @@ def generate_launch_description():
             Node(
                 package="yasmin_factory",
                 executable="yasmin_factory_node",
+                namespace="robot",
                 output="both",
                 parameters=[{"state_machine_file": state_machine_file}],
             )
