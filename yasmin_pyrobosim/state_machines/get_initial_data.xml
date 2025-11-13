@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<StateMachine outcomes="succeeded aborted" name="PATROL_SM" start_state="GETTING_ROBOT_PARAMS">
+  <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
+    <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
+    <Transition from="aborted" to="aborted"/>
+  </State>
+  <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
+    <Transition from="aborted" to="aborted"/>
+    <Transition from="succeeded" to="succeeded"/>
+  </State>
+</StateMachine>

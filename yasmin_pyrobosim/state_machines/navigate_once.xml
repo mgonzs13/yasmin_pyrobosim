@@ -1,20 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<StateMachine outcomes="succeeded canceled aborted" name="NAVIGATE_ONCE" start_state="GETTING_ROBOT_PARAMS">
-  <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
-    <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
-    <Transition from="aborted" to="aborted"/>
-  </State>
-  <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
-    <Transition from="aborted" to="aborted"/>
-    <Transition from="succeeded" to="PICKING_RANDOM_LOCATION"/>
-  </State>
-  <State name="PICKING_RANDOM_LOCATION" type="cpp" class="yasmin_pyrobosim/PickRandomLocationState">
-    <Transition from="succeeded" to="NAVIGATING"/>
-  </State>
+<StateMachine outcomes="succeeded canceled aborted" name="NAVIGATE_ONCE" start_state="GETTING_INITIAL_DATA">
   <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
     <Remap old="target_location" new="random_location"/>
     <Transition from="succeeded" to="succeeded"/>
     <Transition from="canceled" to="canceled"/>
     <Transition from="aborted" to="aborted"/>
   </State>
+  <State name="PICKING_RANDOM_LOCATION" type="cpp" class="yasmin_pyrobosim/PickRandomLocationState">
+    <Transition from="succeeded" to="NAVIGATING"/>
+  </State>
+  <StateMachine name="GETTING_INITIAL_DATA" type="xml" file_path="/home/miguel/pyrobosim_ws/install/yasmin_pyrobosim/share/yasmin_pyrobosim/state_machines/get_initial_data.xml">
+    <Transition from="succeeded" to="PICKING_RANDOM_LOCATION"/>
+    <Transition from="aborted" to="aborted"/>
+  </StateMachine>
 </StateMachine>
