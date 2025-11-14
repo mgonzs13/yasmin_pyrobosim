@@ -22,6 +22,7 @@ public:
       return "end";
     } else {
       blackboard->set<std::string>("next_object", objects[0].name);
+      blackboard->set<std::string>("object_location", objects[0].parent);
       objects.erase(objects.begin());
       blackboard->set<std::vector<pyrobosim_msgs::msg::ObjectState>>(
           "detected_objects", objects);

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<StateMachine name="PATROL_SM" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA">
+  <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+  </State>
+  <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
+    <Remap old="locations" new="ordered_locations"/>
+    <Transition from="next" to="NAVIGATING"/>
+    <Transition from="end" to="succeeded"/>
+  </State>
+  <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
+    <Remap old="target_location" new="next_location"/>
+    <Transition from="aborted" to="aborted"/>
+    <Transition from="canceled" to="canceled"/>
+    <Transition from="succeeded" to="DETECTING_OBJECTS"/>
+  </State>
+  <StateMachine name="GETTING_INITIAL_DATA" type="xml" file_name="get_initial_data.xml" package="yasmin_pyrobosim">
+    <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
+    <Transition from="aborted" to="aborted"/>
+  </StateMachine>
+  <State name="DETECTING_OBJECTS" type="cpp" class="yasmin_pyrobosim/DetectObjectsState">
+    <Transition from="canceled" to="canceled"/>
+    <Transition from="aborted" to="aborted"/>
+    <Transition from="succeeded" to="TAKING_WASTES"/>
+  </State>
+  <StateMachine name="TAKING_WASTES" start_state="GETTING_NEXT_OBJECT" outcomes="succeeded canceled aborted">
+    <State name="GETTING_NEXT_OBJECT" type="cpp" class="yasmin_pyrobosim/GetNextObjectState">
+      <Transition from="end" to="succeeded"/>
+      <Transition from="next" to="NAVIGATE_TO_OBJECT"/>
+    </State>
+    <State name="PICKING_OBJECT" type="cpp" class="yasmin_pyrobosim/PickObjectState">
+      <Remap old="object" new="next_object"/>
+      <Transition from="succeeded" to="NAVIGATING_TO_DUMPSTER"/>
+      <Transition from="aborted" to="aborted"/>
+      <Transition from="canceled" to="canceled"/>
+    </State>
+    <State name="NAVIGATING_TO_DUMPSTER" type="cpp" class="yasmin_pyrobosim/NavigateState">
+      <Remap old="target_location" new="dumpster_location"/>
+      <Transition from="succeeded" to="PLACING_OBJECT"/>
+      <Transition from="aborted" to="aborted"/>
+      <Transition from="canceled" to="canceled"/>
+    </State>
+    <State name="PLACING_OBJECT" type="cpp" class="yasmin_pyrobosim/PlaceObjectState">
+      <Transition from="succeeded" to="GETTING_NEXT_OBJECT"/>
+      <Transition from="aborted" to="aborted"/>
+      <Transition from="canceled" to="canceled"/>
+    </State>
+    <State name="NAVIGATE_TO_OBJECT" type="cpp" class="yasmin_pyrobosim/NavigateState">
+      <Remap old="target_location" new="object_location"/>
+      <Transition from="succeeded" to="PICKING_OBJECT"/>
+      <Transition from="aborted" to="aborted"/>
+      <Transition from="canceled" to="succeeded"/>
+    </State>
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+  </StateMachine>
+</StateMachine>

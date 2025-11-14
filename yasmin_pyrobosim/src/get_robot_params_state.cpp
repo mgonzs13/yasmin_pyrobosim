@@ -15,7 +15,7 @@ public:
       : yasmin_ros::GetParametersState(std::map<std::string, std::any>{
             {"robot_name", std::string("robot")},
             {"dumpster_location", std::string("dumpster")},
-            {"target_object", std::string("")},
+            {"target_object", std::string("waste")},
         }){};
 };
 

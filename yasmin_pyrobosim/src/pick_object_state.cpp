@@ -24,6 +24,7 @@ public:
 
     auto goal = ExecuteTaskAction::Goal();
     goal.action.type = "pick";
+    goal.action.robot = blackboard->get<std::string>("robot_name");
     goal.action.object = blackboard->get<std::string>("object");
     return goal;
   };

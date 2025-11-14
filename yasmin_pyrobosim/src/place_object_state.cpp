@@ -24,6 +24,7 @@ public:
 
     auto goal = ExecuteTaskAction::Goal();
     goal.action.type = "place";
+    goal.action.robot = blackboard->get<std::string>("robot_name");
     return goal;
   };
 };
