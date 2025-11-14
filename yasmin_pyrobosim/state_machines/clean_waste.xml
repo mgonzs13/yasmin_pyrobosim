@@ -5,8 +5,8 @@
   </State>
   <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
     <Remap old="locations" new="ordered_locations"/>
-    <Transition from="next" to="NAVIGATING"/>
     <Transition from="end" to="succeeded"/>
+    <Transition from="next" to="CHECKING_DUMPSTER_LOCATION"/>
   </State>
   <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
     <Remap old="target_location" new="next_location"/>
@@ -53,4 +53,10 @@
     </State>
     <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
   </StateMachine>
+  <State name="CHECKING_DUMPSTER_LOCATION" type="cpp" class="yasmin_pyrobosim/CheckSameLocationState">
+    <Remap old="location" new="next_location"/>
+    <Remap old="target_location" new="dumpster_location"/>
+    <Transition from="no" to="NAVIGATING"/>
+    <Transition from="yes" to="GETTING_NEXT_LOCATION"/>
+  </State>
 </StateMachine>

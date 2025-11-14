@@ -263,5 +263,8 @@ objects:
   - parent: table
     category: waste
 
+  - parent: table
+    category: waste
+
   - parent: pantry
     category: waste

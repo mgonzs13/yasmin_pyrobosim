@@ -110,6 +110,12 @@ install(TARGETS get_next_object_state
   LIBRARY DESTINATION lib
 )
 
+add_library(check_same_location_state SHARED src/check_same_location_state.cpp)
+target_link_libraries(check_same_location_state PUBLIC ${DEPENDENCIES})
+install(TARGETS check_same_location_state
+  LIBRARY DESTINATION lib
+)
+
 # Install state_machines directory
 install(DIRECTORY state_machines
   DESTINATION share/${PROJECT_NAME}/

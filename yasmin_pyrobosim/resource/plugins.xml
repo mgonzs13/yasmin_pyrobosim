@@ -48,3 +48,8 @@
         <description>GetNextObject state for YASMIN demos</description>
     </class>
 </library>
+<library path="check_same_location_state">
+    <class name="yasmin_pyrobosim/CheckSameLocationState" type="CheckSameLocationState" base_class_type="yasmin::State">
+        <description>CheckSameLocation state for YASMIN demos</description>
+    </class>
+</library>
