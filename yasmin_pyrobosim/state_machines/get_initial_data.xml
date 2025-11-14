@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<StateMachine name="PATROL_SM" outcomes="succeeded aborted" start_state="GETTING_ROBOT_PARAMS">
+<StateMachine name="GETTING_INITIAL_DATA" outcomes="succeeded aborted" start_state="GETTING_ROBOT_PARAMS">
   <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
     <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
     <Transition from="aborted" to="aborted"/>

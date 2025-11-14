@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<StateMachine name="NAVIGATE_ONCE" outcomes="succeeded canceled aborted" start_state="GETTING_INITIAL_DATA">
+<StateMachine name="NAVIGATE_RANDOM" outcomes="succeeded canceled aborted" start_state="GETTING_INITIAL_DATA">
   <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
     <Remap old="target_location" new="random_location"/>
     <Transition from="succeeded" to="succeeded"/>

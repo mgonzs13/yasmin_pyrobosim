@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<StateMachine name="PATROL_SM" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA">
+<StateMachine name="PATROL" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA">
   <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
     <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
   </State>
