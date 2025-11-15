@@ -52,6 +52,8 @@
       <Transition from="canceled" to="canceled"/>
     </State>
     <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+    <Transition from="canceled" to="canceled"/>
+    <Transition from="aborted" to="aborted"/>
   </StateMachine>
   <State name="CHECKING_DUMPSTER_LOCATION" type="cpp" class="yasmin_pyrobosim/CheckSameLocationState">
     <Remap old="location" new="next_location"/>
