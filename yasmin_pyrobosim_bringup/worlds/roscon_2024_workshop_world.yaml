@@ -18,10 +18,9 @@ robots:
     path_executor:
       type: constant_velocity
     path_planner:
-      type: rrt
-      bidirectional: true
-      max_connection_dist: 1.0
-      max_time: 5.0
+      type: astar
+      grid_resolution: 0.01
+      grid_inflation_radius: 0.1
 
 rooms:
   - name: dining
