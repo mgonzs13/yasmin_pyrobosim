@@ -8,8 +8,6 @@
 #include "yasmin_ros/basic_outcomes.hpp"
 #include "yasmin_ros/service_state.hpp"
 
-#include <pluginlib/class_list_macros.hpp>
-
 using RequestWorldState = pyrobosim_msgs::srv::RequestWorldState;
 using namespace std::placeholders;
 
@@ -36,4 +34,5 @@ public:
   }
 };
 
+#include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(GetWorldStateState, yasmin::State)

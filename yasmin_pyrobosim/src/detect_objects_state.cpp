@@ -8,8 +8,6 @@
 #include "yasmin_ros/action_state.hpp"
 #include "yasmin_ros/basic_outcomes.hpp"
 
-#include <pluginlib/class_list_macros.hpp>
-
 using DetectObjectsAction = pyrobosim_msgs::action::DetectObjects;
 using namespace std::placeholders;
 
@@ -20,7 +18,7 @@ public:
       : yasmin_ros::ActionState<DetectObjectsAction>(
             "detect_objects",
             std::bind(&DetectObjectsState::create_goal_handler, this, _1),
-            std::bind(&DetectObjectsState::on_result, this, _1, _2)){};
+            std::bind(&DetectObjectsState::on_result, this, _1, _2)) {};
 
   DetectObjectsAction::Goal create_goal_handler(
       std::shared_ptr<yasmin::blackboard::Blackboard> blackboard) {
@@ -45,4 +43,5 @@ public:
   };
 };
 
+#include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(DetectObjectsState, yasmin::State)

@@ -8,8 +8,6 @@
 #include "yasmin/state.hpp"
 #include "yasmin_ros/basic_outcomes.hpp"
 
-#include <pluginlib/class_list_macros.hpp>
-
 class OrderLocationsState : public yasmin::State {
 
 public:
@@ -78,4 +76,5 @@ public:
   };
 };
 
+#include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(OrderLocationsState, yasmin::State)

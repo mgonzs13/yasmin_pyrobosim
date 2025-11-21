@@ -6,8 +6,6 @@
 #include "yasmin/state.hpp"
 #include "yasmin_ros/action_state.hpp"
 
-#include <pluginlib/class_list_macros.hpp>
-
 using ExecuteTaskAction = pyrobosim_msgs::action::ExecuteTaskAction;
 using namespace std::placeholders;
 
@@ -17,7 +15,7 @@ public:
   PickObjectState()
       : yasmin_ros::ActionState<ExecuteTaskAction>(
             "/execute_action",
-            std::bind(&PickObjectState::create_goal_handler, this, _1)){};
+            std::bind(&PickObjectState::create_goal_handler, this, _1)) {};
 
   ExecuteTaskAction::Goal create_goal_handler(
       std::shared_ptr<yasmin::blackboard::Blackboard> blackboard) {
@@ -30,4 +28,5 @@ public:
   };
 };
 
+#include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(PickObjectState, yasmin::State)

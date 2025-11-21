@@ -5,12 +5,10 @@
 #include "pyrobosim_msgs/msg/object_state.hpp"
 #include "yasmin/state.hpp"
 
-#include <pluginlib/class_list_macros.hpp>
-
 class GetNextObjectState : public yasmin::State {
 
 public:
-  GetNextObjectState() : yasmin::State({"next", "end"}){};
+  GetNextObjectState() : yasmin::State({"next", "end"}) {};
 
   std::string
   execute(std::shared_ptr<yasmin::blackboard::Blackboard> blackboard) override {
@@ -31,4 +29,5 @@ public:
   };
 };
 
+#include <pluginlib/class_list_macros.hpp>
 PLUGINLIB_EXPORT_CLASS(GetNextObjectState, yasmin::State)
