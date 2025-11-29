@@ -11,7 +11,7 @@ public:
   GetNextObjectState() : yasmin::State({"next", "end"}) {};
 
   std::string
-  execute(std::shared_ptr<yasmin::blackboard::Blackboard> blackboard) override {
+  execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
     auto objects =
         blackboard->get<std::vector<pyrobosim_msgs::msg::ObjectState>>(
             "detected_objects");
