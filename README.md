@@ -1,5 +1,16 @@
 # yasmin_pyrobosim
 
+# Installation
+
+```
+cd ~/ros2_ws/src
+git clone https://github.com/mgonzs13/yasmin_pyrobosim.git
+cd ~/ros2_ws
+pip3 install -r src/yasmin_pyrobosim/requirements.txt
+rosdep install --from-paths src --ignore-src -r -y
+colcon build
+```
+
 ## Usage
 
 First of all, launch the pyrobosim world to use all the demos:
