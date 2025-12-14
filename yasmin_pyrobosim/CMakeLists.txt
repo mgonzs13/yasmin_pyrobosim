@@ -40,9 +40,10 @@ set(DEPENDENCIES_PACKAGE
 )
 
 # plugins
+pluginlib_export_plugin_description_file(yasmin plugins.xml)
+
 add_library(navigate_state SHARED src/navigate_state.cpp)
 target_link_libraries(navigate_state PUBLIC ${DEPENDENCIES})
-pluginlib_export_plugin_description_file(yasmin plugins.xml)
 install(TARGETS navigate_state
   LIBRARY DESTINATION lib
 )
