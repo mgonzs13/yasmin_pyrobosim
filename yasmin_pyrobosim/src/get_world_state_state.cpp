@@ -4,6 +4,7 @@
 
 #include "pyrobosim_msgs/msg/world_state.hpp"
 #include "pyrobosim_msgs/srv/request_world_state.hpp"
+
 #include "yasmin/state.hpp"
 #include "yasmin_ros/basic_outcomes.hpp"
 #include "yasmin_ros/service_state.hpp"
@@ -19,8 +20,8 @@ public:
             std::bind(&GetWorldStateState::create_request_handler, this, _1),
             std::bind(&GetWorldStateState::response_handler, this, _1, _2)) {}
 
-  std::shared_ptr<RequestWorldState::Request> create_request_handler(
-      std::shared_ptr<yasmin::Blackboard> blackboard) {
+  std::shared_ptr<RequestWorldState::Request>
+  create_request_handler(std::shared_ptr<yasmin::Blackboard> blackboard) {
     (void)blackboard; // No inputs needed for this request
     return std::make_shared<RequestWorldState::Request>();
   }

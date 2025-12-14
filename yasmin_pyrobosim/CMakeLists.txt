@@ -14,13 +14,9 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rclcpp_action REQUIRED)
-find_package(rclpy REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(yasmin REQUIRED)
 find_package(yasmin_ros REQUIRED)
-find_package(yasmin_viewer REQUIRED)
-find_package(yasmin_factory REQUIRED)
 find_package(pyrobosim_msgs REQUIRED)
 
 # C++
@@ -29,12 +25,9 @@ include_directories(include)
 
 set(DEPENDENCIES
   rclcpp::rclcpp
-  rclcpp_action::rclcpp_action
   pluginlib::pluginlib
   yasmin::yasmin
   yasmin_ros::yasmin_ros
-  yasmin_viewer::yasmin_viewer
-  yasmin_factory::yasmin_factory
   ${pyrobosim_msgs_TARGETS}
 )
 set(DEPENDENCIES_PACKAGE
@@ -43,8 +36,6 @@ set(DEPENDENCIES_PACKAGE
   pluginlib
   yasmin
   yasmin_ros
-  yasmin_viewer
-  yasmin_factory
   pyrobosim_msgs
 )
 

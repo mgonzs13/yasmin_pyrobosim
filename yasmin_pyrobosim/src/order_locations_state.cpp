@@ -5,6 +5,7 @@
 
 #include "geometry_msgs/msg/pose.hpp"
 #include "pyrobosim_msgs/msg/world_state.hpp"
+
 #include "yasmin/state.hpp"
 #include "yasmin_ros/basic_outcomes.hpp"
 
@@ -14,8 +15,7 @@ public:
   OrderLocationsState()
       : yasmin::State({yasmin_ros::basic_outcomes::SUCCEED}) {};
 
-  std::string
-  execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
+  std::string execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
     auto world_state =
         blackboard->get<pyrobosim_msgs::msg::WorldState>("world_state");
 

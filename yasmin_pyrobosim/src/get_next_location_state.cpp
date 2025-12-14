@@ -9,8 +9,7 @@ class GetNextLocationState : public yasmin::State {
 public:
   GetNextLocationState() : yasmin::State({"next", "end"}) {};
 
-  std::string
-  execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
+  std::string execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
     auto locations = blackboard->get<std::vector<std::string>>("locations");
 
     if (locations.empty()) {
