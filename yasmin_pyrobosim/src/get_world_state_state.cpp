@@ -20,14 +20,14 @@ public:
             std::bind(&GetWorldStateState::create_request_handler, this, _1),
             std::bind(&GetWorldStateState::response_handler, this, _1, _2)) {}
 
-  std::shared_ptr<RequestWorldState::Request>
-  create_request_handler(std::shared_ptr<yasmin::Blackboard> blackboard) {
+  RequestWorldState::Request::SharedPtr
+  create_request_handler(yasmin::Blackboard::SharedPtr blackboard) {
     (void)blackboard; // No inputs needed for this request
     return std::make_shared<RequestWorldState::Request>();
   }
 
   std::string
-  response_handler(std::shared_ptr<yasmin::Blackboard> blackboard,
+  response_handler(yasmin::Blackboard::SharedPtr blackboard,
                    RequestWorldState::Response::SharedPtr response) {
     blackboard->set<pyrobosim_msgs::msg::WorldState>("world_state",
                                                      response->state);

@@ -18,7 +18,7 @@ public:
             std::bind(&NavigateState::create_goal_handler, this, _1)) {};
 
   ExecuteTaskAction::Goal
-  create_goal_handler(std::shared_ptr<yasmin::Blackboard> blackboard) {
+  create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {
 
     auto goal = ExecuteTaskAction::Goal();
     goal.action.type = "navigate";

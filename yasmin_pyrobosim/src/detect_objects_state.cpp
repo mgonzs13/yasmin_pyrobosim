@@ -22,7 +22,7 @@ public:
             std::bind(&DetectObjectsState::on_result, this, _1, _2)) {};
 
   DetectObjectsAction::Goal
-  create_goal_handler(std::shared_ptr<yasmin::Blackboard> blackboard) {
+  create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {
 
     auto goal = DetectObjectsAction::Goal();
 
@@ -33,7 +33,7 @@ public:
     return goal;
   };
 
-  std::string on_result(std::shared_ptr<yasmin::Blackboard> blackboard,
+  std::string on_result(yasmin::Blackboard::SharedPtr blackboard,
                         const DetectObjectsAction::Result::SharedPtr result) {
 
     blackboard->set<std::vector<pyrobosim_msgs::msg::ObjectState>>(

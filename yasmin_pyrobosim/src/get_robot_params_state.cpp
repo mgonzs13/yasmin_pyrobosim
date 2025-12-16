@@ -10,11 +10,12 @@ class GetRobotParamsState : public yasmin_ros::GetParametersState {
 
 public:
   GetRobotParamsState()
-      : yasmin_ros::GetParametersState(std::map<std::string, std::any>{
-            {"robot_name", std::string("robot")},
-            {"dumpster_location", std::string("dumpster")},
-            {"target_object", std::string("waste")},
-        }) {};
+      : yasmin_ros::GetParametersState(
+            yasmin_ros::GetParametersState::Parameters{
+                {"robot_name", std::string("robot")},
+                {"dumpster_location", std::string("dumpster")},
+                {"target_object", std::string("waste")},
+            }) {};
 };
 
 #include <pluginlib/class_list_macros.hpp>

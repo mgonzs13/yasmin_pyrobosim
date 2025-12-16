@@ -9,8 +9,7 @@ class CheckSameLocationState : public yasmin::State {
 public:
   CheckSameLocationState() : yasmin::State({"yes", "no"}) {};
 
-  std::string
-  execute(std::shared_ptr<yasmin::Blackboard> blackboard) override {
+  std::string execute(yasmin::Blackboard::SharedPtr blackboard) override {
     auto location = blackboard->get<std::string>("location");
     auto target_location = blackboard->get<std::string>("target_location");
 
