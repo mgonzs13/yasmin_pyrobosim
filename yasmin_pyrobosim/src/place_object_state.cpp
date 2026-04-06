@@ -15,7 +15,11 @@ public:
   PlaceObjectState()
       : yasmin_ros::ActionState<ExecuteTaskAction>(
             "/execute_action",
-            std::bind(&PlaceObjectState::create_goal_handler, this, _1)) {};
+            std::bind(&PlaceObjectState::create_goal_handler, this, _1)) {
+    this->set_description("Place an object with the robot.");
+    this->add_input_key("robot_name", "Name of the robot to place with",
+                        "robot");
+  };
 
   ExecuteTaskAction::Goal
   create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {

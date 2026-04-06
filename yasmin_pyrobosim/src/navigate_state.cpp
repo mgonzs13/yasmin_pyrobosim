@@ -15,7 +15,12 @@ public:
   NavigateState()
       : yasmin_ros::ActionState<ExecuteTaskAction>(
             "/execute_action",
-            std::bind(&NavigateState::create_goal_handler, this, _1)) {};
+            std::bind(&NavigateState::create_goal_handler, this, _1)) {
+    this->set_description("Navigate the robot to a target location.");
+    this->add_input_key("robot_name", "Name of the robot to navigate", "robot");
+    this->add_input_key("target_location", "Target location to navigate to",
+                        "location");
+  };
 
   ExecuteTaskAction::Goal
   create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {

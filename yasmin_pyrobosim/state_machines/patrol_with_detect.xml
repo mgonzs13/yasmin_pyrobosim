@@ -1,26 +1,29 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<StateMachine name="PATROL_WITH_DETECT" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA">
-  <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState">
-    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
+<?xml version='1.0' encoding='utf-8'?>
+<StateMachine name="PATROL_WITH_DETECT" outcomes="succeeded aborted canceled" start_state="GETTING_INITIAL_DATA" description="Patrol the full world using detection to detect the objects in each location">
+  <State name="ORDERING_LOCATIONS" type="cpp" class="yasmin_pyrobosim/OrderLocationsState" x="42.66" y="26.61">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION" />
   </State>
-  <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState">
-    <Remap old="locations" new="ordered_locations"/>
-    <Transition from="next" to="NAVIGATING"/>
-    <Transition from="end" to="succeeded"/>
+  <State name="GETTING_NEXT_LOCATION" type="cpp" class="yasmin_pyrobosim/GetNextLocationState" x="49.57" y="263.10">
+    <Remap old="locations" new="ordered_locations" />
+    <Transition from="next" to="NAVIGATING" />
+    <Transition from="end" to="succeeded" />
   </State>
-  <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState">
-    <Remap old="target_location" new="next_location"/>
-    <Transition from="aborted" to="aborted"/>
-    <Transition from="canceled" to="canceled"/>
-    <Transition from="succeeded" to="DETECTING_OBJECTS"/>
+  <State name="NAVIGATING" type="cpp" class="yasmin_pyrobosim/NavigateState" x="263.00" y="27.38">
+    <Remap old="target_location" new="next_location" />
+    <Transition from="aborted" to="aborted" />
+    <Transition from="canceled" to="canceled" />
+    <Transition from="succeeded" to="DETECTING_OBJECTS" />
   </State>
-  <StateMachine name="GETTING_INITIAL_DATA" type="xml" file_name="get_initial_data.xml" package="yasmin_pyrobosim">
-    <Transition from="succeeded" to="ORDERING_LOCATIONS"/>
-    <Transition from="aborted" to="aborted"/>
+  <StateMachine name="GETTING_INITIAL_DATA" type="xml" file_name="get_initial_data.xml" package="yasmin_pyrobosim" x="282.99" y="-125.31">
+    <Transition from="succeeded" to="ORDERING_LOCATIONS" />
+    <Transition from="aborted" to="aborted" />
   </StateMachine>
-  <State name="DETECTING_OBJECTS" type="cpp" class="yasmin_pyrobosim/DetectObjectsState">
-    <Transition from="succeeded" to="GETTING_NEXT_LOCATION"/>
-    <Transition from="canceled" to="canceled"/>
-    <Transition from="aborted" to="aborted"/>
+  <State name="DETECTING_OBJECTS" type="cpp" class="yasmin_pyrobosim/DetectObjectsState" x="638.45" y="267.29">
+    <Transition from="succeeded" to="GETTING_NEXT_LOCATION" />
+    <Transition from="canceled" to="canceled" />
+    <Transition from="aborted" to="aborted" />
   </State>
+  <FinalOutcome name="succeeded" x="51.94" y="459.30" />
+  <FinalOutcome name="aborted" x="818.05" y="-131.14" />
+  <FinalOutcome name="canceled" x="628.98" y="43.25" />
 </StateMachine>

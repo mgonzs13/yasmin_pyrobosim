@@ -12,8 +12,17 @@
 class OrderLocationsState : public yasmin::State {
 
 public:
-  OrderLocationsState()
-      : yasmin::State({yasmin_ros::basic_outcomes::SUCCEED}) {};
+  OrderLocationsState() : yasmin::State({yasmin_ros::basic_outcomes::SUCCEED}) {
+    this->set_description(
+        "Order the locations in the world state by distance to the robot and "
+        "consecutive locations.");
+    this->set_outcome_description(yasmin_ros::basic_outcomes::SUCCEED,
+                                  "Locations were ordered successfully.");
+    this->add_input_key("robot_name", "Name of the robot to navigate", "robot");
+    this->add_input_key("world_state", "Current world state");
+    this->add_output_key("ordered_locations",
+                         "Ordered list of location names to navigate to");
+  };
 
   std::string execute(yasmin::Blackboard::SharedPtr blackboard) override {
     auto world_state =

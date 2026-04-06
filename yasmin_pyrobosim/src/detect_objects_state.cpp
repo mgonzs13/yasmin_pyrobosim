@@ -19,7 +19,16 @@ public:
       : yasmin_ros::ActionState<DetectObjectsAction>(
             "detect_objects",
             std::bind(&DetectObjectsState::create_goal_handler, this, _1),
-            std::bind(&DetectObjectsState::on_result, this, _1, _2)) {};
+            std::bind(&DetectObjectsState::on_result, this, _1, _2)) {
+    this->set_description(
+        "Detect objects in the environment with the robot's sensors and set "
+        "them as an output key. Optionally, a target object can be specified "
+        "as "
+        "an input key to only detect objects of that type.");
+    this->add_input_key("target_object", "Name of the target object to detect");
+    this->add_output_key("detected_objects",
+                         "List of detected objects with their locations");
+  };
 
   DetectObjectsAction::Goal
   create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {

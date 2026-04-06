@@ -18,7 +18,12 @@ public:
       : yasmin_ros::ServiceState<RequestWorldState>(
             "/request_world_state",
             std::bind(&GetWorldStateState::create_request_handler, this, _1),
-            std::bind(&GetWorldStateState::response_handler, this, _1, _2)) {}
+            std::bind(&GetWorldStateState::response_handler, this, _1, _2)) {
+    this->set_description(
+        "Request the current world state from the service and "
+        "set it as an output key.");
+    this->add_output_key("world_state", "Current world state");
+  }
 
   RequestWorldState::Request::SharedPtr
   create_request_handler(yasmin::Blackboard::SharedPtr blackboard) {

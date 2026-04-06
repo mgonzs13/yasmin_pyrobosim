@@ -1,11 +1,13 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<StateMachine name="GETTING_INITIAL_DATA" outcomes="succeeded aborted" start_state="GETTING_ROBOT_PARAMS">
-  <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState">
-    <Transition from="succeeded" to="GETTING_WORLD_STATE"/>
-    <Transition from="aborted" to="aborted"/>
+<?xml version='1.0' encoding='utf-8'?>
+<StateMachine name="GETTING_INITIAL_DATA" outcomes="succeeded aborted" start_state="GETTING_ROBOT_PARAMS" description="Get initial data from the ROS 2 params and the Pyrobosim world state">
+  <State name="GETTING_ROBOT_PARAMS" type="cpp" class="yasmin_pyrobosim/GetRobotParamsState" x="0.00" y="0.00">
+    <Transition from="succeeded" to="GETTING_WORLD_STATE" />
+    <Transition from="aborted" to="aborted" />
   </State>
-  <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState">
-    <Transition from="aborted" to="aborted"/>
-    <Transition from="succeeded" to="succeeded"/>
+  <State name="GETTING_WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState" x="348.95" y="-166.97">
+    <Transition from="aborted" to="aborted" />
+    <Transition from="succeeded" to="succeeded" />
   </State>
+  <FinalOutcome name="succeeded" x="700.71" y="46.21" />
+  <FinalOutcome name="aborted" x="370.83" y="237.54" />
 </StateMachine>

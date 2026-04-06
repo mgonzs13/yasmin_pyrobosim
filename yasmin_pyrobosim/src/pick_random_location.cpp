@@ -13,7 +13,14 @@ class PickRandomLocationState : public yasmin::State {
 
 public:
   PickRandomLocationState()
-      : yasmin::State({yasmin_ros::basic_outcomes::SUCCEED}) {};
+      : yasmin::State({yasmin_ros::basic_outcomes::SUCCEED}) {
+    this->set_description("Pick a random location from the world state and set "
+                          "it as an output key.");
+    this->set_outcome_description(yasmin_ros::basic_outcomes::SUCCEED,
+                                  "A random location was picked successfully.");
+    this->add_input_key("world_state", "Current world state");
+    this->add_output_key("random_location", "Randomly picked location name");
+  };
 
   std::string execute(yasmin::Blackboard::SharedPtr blackboard) override {
     auto world_state =

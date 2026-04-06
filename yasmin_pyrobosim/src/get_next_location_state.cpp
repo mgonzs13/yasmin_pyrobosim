@@ -7,7 +7,21 @@
 class GetNextLocationState : public yasmin::State {
 
 public:
-  GetNextLocationState() : yasmin::State({"next", "end"}) {};
+  GetNextLocationState() : yasmin::State({"next", "end"}) {
+    this->set_description(
+        "Get the next location to navigate to from the ordered locations and "
+        "set "
+        "it as an output key. If there are no more locations, return 'end'.");
+    this->set_outcome_description(
+        "next",
+        "A next location to navigate to was found and set as an output key.");
+    this->set_outcome_description(
+        "end", "No more locations to navigate to were found.");
+    this->add_input_key("locations",
+                        "List of ordered location names to navigate to");
+    this->add_output_key("next_location",
+                         "Name of the next location to navigate to");
+  };
 
   std::string execute(yasmin::Blackboard::SharedPtr blackboard) override {
     auto locations = blackboard->get<std::vector<std::string>>("locations");

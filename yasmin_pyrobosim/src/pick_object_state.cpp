@@ -15,7 +15,12 @@ public:
   PickObjectState()
       : yasmin_ros::ActionState<ExecuteTaskAction>(
             "/execute_action",
-            std::bind(&PickObjectState::create_goal_handler, this, _1)) {};
+            std::bind(&PickObjectState::create_goal_handler, this, _1)) {
+    this->set_description("Pick an object with the robot.");
+    this->add_input_key("robot_name", "Name of the robot to pick with",
+                        "robot");
+    this->add_input_key("object", "Object to pick");
+  };
 
   ExecuteTaskAction::Goal
   create_goal_handler(yasmin::Blackboard::SharedPtr blackboard) {

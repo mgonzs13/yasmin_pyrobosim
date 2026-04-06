@@ -2,7 +2,7 @@
 
 # Installation
 
-```
+```shell
 cd ~/ros2_ws/src
 git clone https://github.com/mgonzs13/yasmin_pyrobosim.git
 cd ~/ros2_ws
