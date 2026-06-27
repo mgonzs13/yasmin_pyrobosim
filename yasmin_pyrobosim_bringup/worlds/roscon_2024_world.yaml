@@ -19,7 +19,7 @@ robots:
       type: constant_velocity
     path_planner:
       type: astar
-      grid_resolution: 0.01
+      grid_resolution: 0.1
       grid_inflation_radius: 0.1
 
 rooms:

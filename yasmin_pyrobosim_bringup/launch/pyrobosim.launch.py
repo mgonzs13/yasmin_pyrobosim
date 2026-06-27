@@ -13,13 +13,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
 from launch import LaunchDescription
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from ament_index_python import get_package_share_directory
 
 
 def generate_launch_description():
+
+    world_file_arg = DeclareLaunchArgument(
+        "world_file",
+        default_value="roscon_2024_world.yaml",
+        description="World YAML file to load",
+    )
+
+    world_file = LaunchConfiguration("world_file")
 
     pyrobosim_cmd = Node(
         package="pyrobosim_ros",
@@ -27,15 +36,18 @@ def generate_launch_description():
         output="both",
         parameters=[
             {
-                "world_file": os.path.join(
-                    get_package_share_directory("yasmin_pyrobosim_bringup"),
-                    "worlds",
-                    "roscon_2024_workshop_world.yaml",
+                "world_file": PathJoinSubstitution(
+                    [
+                        get_package_share_directory("yasmin_pyrobosim_bringup"),
+                        "worlds",
+                        world_file,
+                    ]
                 )
             }
         ],
     )
 
     ld = LaunchDescription()
+    ld.add_action(world_file_arg)
     ld.add_action(pyrobosim_cmd)
     return ld
