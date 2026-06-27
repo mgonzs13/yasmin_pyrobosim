@@ -108,6 +108,12 @@ install(TARGETS check_same_location_state
   LIBRARY DESTINATION lib
 )
 
+add_library(set_robot_params_state SHARED src/set_robot_params_state.cpp)
+target_link_libraries(set_robot_params_state PUBLIC ${DEPENDENCIES})
+install(TARGETS set_robot_params_state
+  LIBRARY DESTINATION lib
+)
+
 # Install state_machines directory
 install(DIRECTORY state_machines
   DESTINATION share/${PROJECT_NAME}/

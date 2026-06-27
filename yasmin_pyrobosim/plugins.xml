@@ -54,4 +54,9 @@
             <description>CheckSameLocation state for YASMIN demos</description>
         </class>
     </library>
+    <library path="set_robot_params_state">
+        <class name="yasmin_pyrobosim/SetRobotParamsState" type="SetRobotParamsState" base_class_type="yasmin::State">
+            <description>SetRobotParams state for YASMIN demos</description>
+        </class>
+    </library>
 </class_libraries>

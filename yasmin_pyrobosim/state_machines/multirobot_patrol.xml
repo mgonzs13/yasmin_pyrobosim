@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<StateMachine name="MULTIROBOT_PATROL" outcomes="succeeded aborted canceled" start_state="PARALLEL_PATROL" description="Patrol the world with two robots concurrently using orthogonal regions">
+
+  <OrthogonalState name="PARALLEL_PATROL" outcomes="succeeded aborted canceled" default_outcome="aborted" description="Two orthogonal regions, one per robot, each running a patrol loop">
+
+    <!-- Region for robot -->
+    <Region name="ROBOT1" outcomes="succeeded aborted canceled" start_state="SETUP_R1" description="Robot 1 patrol region">
+      <State name="SETUP_R1" type="cpp" class="yasmin_pyrobosim/SetRobotParamsState" x="0.00" y="0.00">
+        <Param name="robot_name" default_type="str" default_value="robot" />
+        <Param name="dumpster_location" default_type="str" default_value="dumpster" />
+        <Param name="target_object" default_type="str" default_value="waste" />
+        <Transition from="succeeded" to="WORLD_STATE_R1" />
+      </State>
+      <State name="WORLD_STATE_R1" type="cpp" class="yasmin_pyrobosim/GetWorldStateState" x="200.00" y="-100.00">
+        <Transition from="succeeded" to="ORDER_LOCS_R1" />
+        <Transition from="aborted" to="aborted" />
+      </State>
+      <State name="ORDER_LOCS_R1" type="cpp" class="yasmin_pyrobosim/OrderLocationsState" x="400.00" y="0.00">
+        <Transition from="succeeded" to="NEXT_LOC_R1" />
+      </State>
+      <State name="NEXT_LOC_R1" type="cpp" class="yasmin_pyrobosim/GetNextLocationState" x="500.00" y="150.00">
+        <Remap old="locations" new="ordered_locations" />
+        <Transition from="next" to="NAVIGATE_R1" />
+        <Transition from="end" to="succeeded" />
+      </State>
+      <State name="NAVIGATE_R1" type="cpp" class="yasmin_pyrobosim/NavigateState" x="700.00" y="300.00">
+        <Remap old="target_location" new="next_location" />
+        <Transition from="succeeded" to="NEXT_LOC_R1" />
+        <Transition from="aborted" to="aborted" />
+        <Transition from="canceled" to="canceled" />
+      </State>
+      <FinalOutcome name="succeeded" x="300.00" y="400.00" />
+      <FinalOutcome name="aborted" x="500.00" y="400.00" />
+      <FinalOutcome name="canceled" x="700.00" y="400.00" />
+    </Region>
+
+    <!-- Region for robot2 -->
+    <Region name="ROBOT2" outcomes="succeeded aborted canceled" start_state="SETUP_R2" description="Robot 2 patrol region">
+      <State name="SETUP_R2" type="cpp" class="yasmin_pyrobosim/SetRobotParamsState" x="0.00" y="0.00">
+        <Param name="robot_name" default_type="str" default_value="robot2" />
+        <Param name="dumpster_location" default_type="str" default_value="dumpster" />
+        <Param name="target_object" default_type="str" default_value="waste" />
+        <Transition from="succeeded" to="WORLD_STATE_R2" />
+      </State>
+      <State name="WORLD_STATE_R2" type="cpp" class="yasmin_pyrobosim/GetWorldStateState" x="200.00" y="-100.00">
+        <Transition from="succeeded" to="ORDER_LOCS_R2" />
+        <Transition from="aborted" to="aborted" />
+      </State>
+      <State name="ORDER_LOCS_R2" type="cpp" class="yasmin_pyrobosim/OrderLocationsState" x="400.00" y="0.00">
+        <Transition from="succeeded" to="NEXT_LOC_R2" />
+      </State>
+      <State name="NEXT_LOC_R2" type="cpp" class="yasmin_pyrobosim/GetNextLocationState" x="500.00" y="150.00">
+        <Remap old="locations" new="ordered_locations" />
+        <Transition from="next" to="NAVIGATE_R2" />
+        <Transition from="end" to="succeeded" />
+      </State>
+      <State name="NAVIGATE_R2" type="cpp" class="yasmin_pyrobosim/NavigateState" x="700.00" y="300.00">
+        <Remap old="target_location" new="next_location" />
+        <Transition from="succeeded" to="NEXT_LOC_R2" />
+        <Transition from="aborted" to="aborted" />
+        <Transition from="canceled" to="canceled" />
+      </State>
+      <FinalOutcome name="succeeded" x="300.00" y="400.00" />
+      <FinalOutcome name="aborted" x="500.00" y="400.00" />
+      <FinalOutcome name="canceled" x="700.00" y="400.00" />
+    </Region>
+
+    <OutcomeMap outcome="succeeded">
+      <Item state="ROBOT1" outcome="succeeded" />
+      <Item state="ROBOT2" outcome="succeeded" />
+    </OutcomeMap>
+    <OutcomeMap outcome="aborted">
+      <Item state="ROBOT1" outcome="aborted" />
+    </OutcomeMap>
+    <OutcomeMap outcome="aborted">
+      <Item state="ROBOT2" outcome="aborted" />
+    </OutcomeMap>
+    <OutcomeMap outcome="canceled">
+      <Item state="ROBOT1" outcome="canceled" />
+    </OutcomeMap>
+    <OutcomeMap outcome="canceled">
+      <Item state="ROBOT2" outcome="canceled" />
+    </OutcomeMap>
+
+    <Transition from="succeeded" to="succeeded" />
+    <Transition from="aborted" to="aborted" />
+    <Transition from="canceled" to="canceled" />
+
+    <FinalOutcome name="succeeded" x="100.00" y="500.00" />
+    <FinalOutcome name="aborted" x="300.00" y="500.00" />
+    <FinalOutcome name="canceled" x="500.00" y="500.00" />
+  </OrthogonalState>
+
+  <FinalOutcome name="succeeded" x="100.00" y="650.00" />
+  <FinalOutcome name="aborted" x="300.00" y="650.00" />
+  <FinalOutcome name="canceled" x="500.00" y="650.00" />
+</StateMachine>
