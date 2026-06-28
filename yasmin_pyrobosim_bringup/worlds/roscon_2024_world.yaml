@@ -1,4 +1,4 @@
-# World based on the ROSCon 2024 deliberation workshop.
+# World based on the ROSCon 2024 deliberation workshop with two robots.
 # https://github.com/ros-wg-delib/roscon24-workshop
 
 metadata:
@@ -6,7 +6,7 @@ metadata:
   objects: $PWD/roscon_2024_object_data.yaml
 
 params:
-  name: roscon_2024_world
+  name: roscon_2024_multirobot_world
   inflation_radius: 0.01
   object_radius: 0.01
 
@@ -14,6 +14,17 @@ robots:
   - name: robot
     radius: 0.1
     location: dining
+    partial_obs_objects: True
+    path_executor:
+      type: constant_velocity
+    path_planner:
+      type: astar
+      grid_resolution: 0.1
+      grid_inflation_radius: 0.1
+
+  - name: robot2
+    radius: 0.1
+    location: office
     partial_obs_objects: True
     path_executor:
       type: constant_velocity
@@ -31,22 +42,21 @@ rooms:
         - [1.6, -1.0]
         - [1.6, 1.0]
         - [-1.6, 1.0]
-    # Add navigation poses since the centroid is blocked by the table.
     nav_poses:
-      - position: # left
+      - position:
           x: -1.0
           y: 0.0
-      - position: # right
+      - position:
           x: 1.0
           y: 0.0
         rotation_eul:
           yaw: 3.14
-      - position: # above
+      - position:
           x: 0.0
           y: 0.8
         rotation_eul:
           yaw: -1.57
-      - position: # below
+      - position:
           x: 0.0
           y: -0.8
         rotation_eul:

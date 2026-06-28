@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='utf-8'?>
+<StateMachine name="MULTIROBOT_PATROL_CLEAN" outcomes="succeeded aborted canceled" start_state="WORLD_STATE" description="Two robots: robot patrols and detects waste, robot2 picks waste and moves to dumpster. Independent patrol with index-based waste access and JoinState completion barrier.">
+  <State name="WORLD_STATE" type="cpp" class="yasmin_pyrobosim/GetWorldStateState" x="0.00" y="0.00">
+    <Transition from="succeeded" to="PARALLEL_WORK" />
+    <Transition from="aborted" to="aborted" />
+  </State>
+  <OrthogonalState name="PARALLEL_WORK" outcomes="aborted canceled succeeded" default_outcome="aborted" description="Two orthogonal regions: patrol+detect and cleanup, joined at completion" x="178.56" y="280.21">
+    <Remap old="world_state" new="world_state" />
+    <Region name="PATROL_ROBOT" outcomes="succeeded aborted canceled" start_state="SETUP_R1" description="Robot 1 (robot): patrols all locations except dumpster, detects and accumulates waste objects">
+      <State name="SETUP_R1" type="cpp" class="yasmin_pyrobosim/SetRobotParamsState" x="-378.70" y="-80.66">
+        <Param name="robot_name" default_type="str" default_value="robot" />
+        <Param name="dumpster_location" default_type="str" default_value="dumpster" />
+        <Param name="target_object" default_type="str" default_value="waste" />
+        <Remap old="robot_name" new="r1_robot_name" />
+        <Transition from="succeeded" to="ORDER_LOCS_R1" />
+      </State>
+      <State name="ORDER_LOCS_R1" type="cpp" class="yasmin_pyrobosim/OrderLocationsState" x="4.10" y="-94.33">
+        <Remap old="robot_name" new="r1_robot_name" />
+        <Transition from="succeeded" to="NEXT_LOC_R1" />
+      </State>
+      <State name="NEXT_LOC_R1" type="cpp" class="yasmin_pyrobosim/GetNextLocationState" x="259.76" y="-86.13">
+        <Remap old="locations" new="ordered_locations" />
+        <Transition from="next" to="CHECK_DUMPSTER_R1" />
+        <Transition from="end" to="SET_PATROL_DONE_R1" />
+      </State>
+      <State name="CHECK_DUMPSTER_R1" type="cpp" class="yasmin_pyrobosim/CheckSameLocationState" x="409.96" y="83.73">
+        <Remap old="location" new="next_location" />
+        <Remap old="target_location" new="dumpster_location" />
+        <Transition from="yes" to="NEXT_LOC_R1" />
+        <Transition from="no" to="NAVIGATE_R1" />
+      </State>
+      <State name="NAVIGATE_R1" type="cpp" class="yasmin_pyrobosim/NavigateState" x="565.00" y="195.00">
+        <Remap old="target_location" new="next_location" />
+        <Remap old="robot_name" new="r1_robot_name" />
+        <Transition from="succeeded" to="DETECT_R1" />
+        <Transition from="aborted" to="aborted" />
+        <Transition from="canceled" to="canceled" />
+      </State>
+      <State name="DETECT_R1" type="cpp" class="yasmin_pyrobosim/DetectObjectsState" x="65.07" y="345.76">
+        <Transition from="succeeded" to="ACCUMULATE_R1" />
+        <Transition from="aborted" to="aborted" />
+        <Transition from="canceled" to="canceled" />
+      </State>
+      <State name="ACCUMULATE_R1" type="cpp" class="yasmin_pyrobosim/AccumulateObjectsState" x="-100.00" y="400.00">
+        <Transition from="succeeded" to="NEXT_LOC_R1" />
+      </State>
+      <State name="SET_PATROL_DONE_R1" type="cpp" class="yasmin_pyrobosim/SetBlackboardStringState" x="500.00" y="-200.00">
+        <Param name="key" default_type="str" default_value="patrol_done" />
+        <Param name="value" default_type="str" default_value="true" />
+        <Transition from="succeeded" to="JOIN_COMPLETION_R1" />
+      </State>
+      <JoinState name="JOIN_COMPLETION_R1" sync_id="completion_sync" outcome="joined" x="700.00" y="-300.00">
+        <Transition from="joined" to="succeeded" />
+      </JoinState>
+      <FinalOutcome name="succeeded" instance_id="succeeded-e330f712" x="900.00" y="0.00" />
+      <FinalOutcome name="aborted" instance_id="aborted-6a3d384c" x="385.56" y="273.90" />
+      <FinalOutcome name="canceled" instance_id="canceled-4221d0b9" x="684.96" y="374.18" />
+    </Region>
+    <Region name="CLEANUP_ROBOT" outcomes="succeeded aborted canceled" start_state="SETUP_R2" description="Robot 2 (robot2): picks accumulated waste by index, moves to dumpster, syncs completion with patrol">
+      <State name="SETUP_R2" type="cpp" class="yasmin_pyrobosim/SetRobotParamsState" x="-62.08" y="47.80">
+        <Param name="robot_name" default_type="str" default_value="robot2" />
+        <Param name="dumpster_location" default_type="str" default_value="dumpster" />
+        <Param name="target_object" default_type="str" default_value="waste" />
+        <Remap old="robot_name" new="r2_robot_name" />
+        <Transition from="succeeded" to="PROCESS_WASTES_R2" />
+      </State>
+      <StateMachine name="PROCESS_WASTES_R2" outcomes="succeeded canceled aborted" start_state="GET_NEXT_INDEXED_R2" x="300.00" y="200.00">
+        <Remap old="robot_name" new="r2_robot_name" />
+        <State name="GET_NEXT_INDEXED_R2" type="cpp" class="yasmin_pyrobosim/GetNextIndexedObjectState">
+          <Transition from="next" to="NAVIGATE_TO_OBJECT_R2" />
+          <Transition from="end" to="CHECK_COMPLETION_R2" />
+        </State>
+        <State name="NAVIGATE_TO_OBJECT_R2" type="cpp" class="yasmin_pyrobosim/NavigateState">
+          <Remap old="target_location" new="object_location" />
+          <Transition from="succeeded" to="PICKING_OBJECT_R2" />
+          <Transition from="aborted" to="aborted" />
+          <Transition from="canceled" to="canceled" />
+        </State>
+        <State name="PICKING_OBJECT_R2" type="cpp" class="yasmin_pyrobosim/PickObjectState">
+          <Remap old="object" new="next_object" />
+          <Transition from="succeeded" to="NAVIGATING_TO_DUMPSTER_R2" />
+          <Transition from="aborted" to="aborted" />
+          <Transition from="canceled" to="canceled" />
+        </State>
+        <State name="NAVIGATING_TO_DUMPSTER_R2" type="cpp" class="yasmin_pyrobosim/NavigateState">
+          <Remap old="target_location" new="dumpster_location" />
+          <Transition from="succeeded" to="PLACING_OBJECT_R2" />
+          <Transition from="aborted" to="aborted" />
+          <Transition from="canceled" to="canceled" />
+        </State>
+        <State name="PLACING_OBJECT_R2" type="cpp" class="yasmin_pyrobosim/PlaceObjectState">
+          <Transition from="succeeded" to="GET_NEXT_INDEXED_R2" />
+          <Transition from="aborted" to="aborted" />
+          <Transition from="canceled" to="canceled" />
+        </State>
+        <State name="CHECK_COMPLETION_R2" type="cpp" class="yasmin_pyrobosim/CheckBlackboardStringState">
+          <Param name="key" default_type="str" default_value="patrol_done" />
+          <Param name="value" default_type="str" default_value="true" />
+          <Transition from="yes" to="succeeded" />
+          <Transition from="no" to="GET_NEXT_INDEXED_R2" />
+        </State>
+        <FinalOutcome name="succeeded" />
+        <FinalOutcome name="canceled" />
+        <FinalOutcome name="aborted" />
+        <Transition from="succeeded" to="JOIN_COMPLETION_R2" />
+        <Transition from="aborted" to="aborted" to_instance="aborted-46c83a06" />
+        <Transition from="canceled" to="canceled" to_instance="canceled-ace86be9" />
+      </StateMachine>
+      <JoinState name="JOIN_COMPLETION_R2" sync_id="completion_sync" outcome="joined" x="700.00" y="300.00">
+        <Transition from="joined" to="succeeded" />
+      </JoinState>
+      <FinalOutcome name="succeeded" instance_id="succeeded-189e6336" x="900.00" y="0.00" />
+      <FinalOutcome name="aborted" instance_id="aborted-46c83a06" x="700.00" y="170.00" />
+      <FinalOutcome name="canceled" instance_id="canceled-ace86be9" x="700.00" y="340.00" />
+    </Region>
+    <FinalOutcome name="aborted" instance_id="aborted-ad6785a7" x="35.88" y="183.50" />
+    <FinalOutcome name="canceled" instance_id="canceled-e7706ddb" x="470.30" y="206.93" />
+    <FinalOutcome name="succeeded" instance_id="succeeded-3b651311" x="-233.47" y="108.24" />
+    <OutcomeMap outcome="succeeded">
+      <Item state="PATROL_ROBOT" outcome="succeeded" />
+      <Item state="CLEANUP_ROBOT" outcome="succeeded" />
+    </OutcomeMap>
+    <OutcomeMap outcome="aborted">
+      <Item state="PATROL_ROBOT" outcome="aborted" />
+      <Item state="CLEANUP_ROBOT" outcome="aborted" />
+    </OutcomeMap>
+    <OutcomeMap outcome="canceled">
+      <Item state="PATROL_ROBOT" outcome="canceled" />
+      <Item state="CLEANUP_ROBOT" outcome="canceled" />
+    </OutcomeMap>
+    <Transition from="succeeded" to="succeeded" />
+    <Transition from="aborted" to="aborted" />
+    <Transition from="canceled" to="canceled" />
+  </OrthogonalState>
+  <FinalOutcome name="succeeded" instance_id="succeeded-4e8d9118" x="661.30" y="374.05" />
+  <FinalOutcome name="aborted" instance_id="aborted-fe3e7e45" x="661.62" y="60.43" />
+  <FinalOutcome name="canceled" instance_id="canceled-29616678" x="665.05" y="245.77" />
+</StateMachine>

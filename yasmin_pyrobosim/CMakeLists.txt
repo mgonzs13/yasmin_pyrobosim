@@ -114,6 +114,30 @@ install(TARGETS set_robot_params_state
   LIBRARY DESTINATION lib
 )
 
+add_library(accumulate_objects_state SHARED src/accumulate_objects_state.cpp)
+target_link_libraries(accumulate_objects_state PUBLIC ${DEPENDENCIES})
+install(TARGETS accumulate_objects_state
+  LIBRARY DESTINATION lib
+)
+
+add_library(set_blackboard_string_state SHARED src/set_blackboard_string_state.cpp)
+target_link_libraries(set_blackboard_string_state PUBLIC ${DEPENDENCIES})
+install(TARGETS set_blackboard_string_state
+  LIBRARY DESTINATION lib
+)
+
+add_library(check_blackboard_string_state SHARED src/check_blackboard_string_state.cpp)
+target_link_libraries(check_blackboard_string_state PUBLIC ${DEPENDENCIES})
+install(TARGETS check_blackboard_string_state
+  LIBRARY DESTINATION lib
+)
+
+add_library(get_next_indexed_object_state SHARED src/get_next_indexed_object_state.cpp)
+target_link_libraries(get_next_indexed_object_state PUBLIC ${DEPENDENCIES})
+install(TARGETS get_next_indexed_object_state
+  LIBRARY DESTINATION lib
+)
+
 # Install state_machines directory
 install(DIRECTORY state_machines
   DESTINATION share/${PROJECT_NAME}/
